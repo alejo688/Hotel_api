@@ -1,0 +1,82 @@
+{
+	"info": {
+		"_postman_id": "a7b3d269-edf3-4aef-8980-7faa0a770c51",
+		"name": "Hotel-api",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Creación_reserva",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"fecha_Entrada\": \"2022-01-10\",\r\n  \"fecha_Salida\": \"2022-01-17\",\r\n  \"estado\": true,\r\n  \"id_Usuario\": 5,\r\n  \"id_Habitacion\": 1\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://localhost:44334/api/Reserva",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "44334",
+					"path": [
+						"api",
+						"Reserva"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Cancelación_Reserva",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "https://localhost:44334/api/Reserva/3",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "44334",
+					"path": [
+						"api",
+						"Reserva",
+						"3"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "consulta_hotel",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://localhost:44334/api/Hotel/1/2022-01-01/2022-01-30",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "44334",
+					"path": [
+						"api",
+						"Hotel",
+						"1",
+						"2022-01-01",
+						"2022-01-30"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
