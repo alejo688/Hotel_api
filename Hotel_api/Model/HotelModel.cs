@@ -1,11 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace Hotel_api.Model
 {
+    /**
+     * Clase modelo de la entidad Hotel
+     **/
     public class HotelModel
     {
         [Key]
@@ -34,7 +35,7 @@ namespace Hotel_api.Model
         public bool Estado { get; set; }
 
         [Required(ErrorMessage = "La cantidad de habitaciones del hotel es obligatoria")]
-        [Range(1,999)]
+        [Range(1,999)] // Asignación de rango
         public int Cantidad_Habitaciones { get; set; }
 
         public List<HabitacionModel> Habitaciones { get; set; }

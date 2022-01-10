@@ -1,20 +1,20 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace Hotel_api.Model
 {
+    /**
+     * Clase modelo de la entidad Reserva
+     **/
     public class ReservaModel
     {
         [Key]
         public int Id_Reserva { get; set; }
 
         [Required(ErrorMessage = "La fecha de entrada es obligatorio")]
-        [DataType(DataType.Date)]
-        [Column(TypeName = "datetime")]
+        [DataType(DataType.Date)] // Asignación del tipo de dato a nivel de ef
+        [Column(TypeName = "datetime")] // Asignación del tipo de dato a nivel de base de datos
         public DateTime Fecha_Entrada { get; set; }
 
         [Required(ErrorMessage = "La fecha de salida es obligatorio")]

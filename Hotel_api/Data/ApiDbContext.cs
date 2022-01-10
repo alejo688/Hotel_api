@@ -1,30 +1,33 @@
 ﻿using Hotel_api.Model;
 using Microsoft.EntityFrameworkCore;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace Hotel_api.Data
 {
+    /**
+     * Clase contexto de la solucion
+     **/
     public class ApiDbContext : DbContext
     {
-        public ApiDbContext(DbContextOptions<ApiDbContext> options) : base(options)
-        {
+        public ApiDbContext(DbContextOptions<ApiDbContext> options) : base(options) { }
 
-        }
-
+        // Asignación de modelos que van a pasar a ser tablas
         public DbSet<HotelModel> Hoteles { get; set; }
         public DbSet<UsuarioModel> Usuarios { get; set; }
         public DbSet<HabitacionModel> Habitaciones { get; set; }
         public DbSet<ReservaModel> Reservas { get; set; }
 
+        /**
+         *  Función para configuración e insercción de datos
+         **/
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            // Asignación de llave primaria
             modelBuilder.Entity<HotelModel>()
                 .ToTable("Hoteles")
                 .HasKey(b => b.Id_Hotel);
 
+            // Generación de datos de pruebas para la entidad
             modelBuilder.Entity<HotelModel>()
                 .HasData(
                     new { Id_Hotel = 1, Nombre = "Hotel Bogotá", Pais = "Colombia", Latitud = "4.640845", Longitud = "-74.098481", Descripcion = "Hermoso hotel ubicado en la ciudad de bogotá", Estado = true, Cantidad_Habitaciones = 5 },
@@ -49,6 +52,7 @@ namespace Hotel_api.Data
                 .ToTable("Habitaciones")
                 .HasKey(b => b.Id_Habitacion);
 
+            // Asignación de tipo de relación entre entidades
             modelBuilder.Entity<HabitacionModel>()
                 .HasOne(p => p.HotelModel)
                 .WithMany(b => b.Habitaciones)
@@ -82,6 +86,7 @@ namespace Hotel_api.Data
                 .WithMany(b => b.Reservas)
                 .HasForeignKey(p => p.Id_Usuario);
 
+            // Asignación de datos por defecto a columna Fecha_reserva
             modelBuilder.Entity<ReservaModel>()
                 .Property(b => b.Fecha_Reserva)
                 .HasDefaultValueSql("getdate()");

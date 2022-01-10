@@ -2,11 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Hotel_api.Data;
-using Hotel_api.Model;
 
 namespace Hotel_api.Controllers
 {
@@ -16,15 +14,18 @@ namespace Hotel_api.Controllers
     {
         private readonly ApiDbContext _context;
 
+        // Inicialización del contexto
         public HotelController(ApiDbContext context)
         {
             _context = context;
         }
 
-        // GET: api/Hotel/1/2021-01-01/2021-01-31
+        // GET: api/Hotel/1/2022-01-01/2022-01-31
+        // función para traer fechas de reserva activas por hotel
         [HttpGet("{id}/{fecha_Inicio}/{Fecha_Final}")]
         public async Task<IActionResult> GetHotelModel(int id, DateTime fecha_Inicio, DateTime Fecha_Final)
         {
+            // Consulta para traer las reservaciones de acuerdo a los parametros recibidos
             var ReservasHotel = await (from hotel in _context.Hoteles
                                    join habitaciones in _context.Habitaciones on hotel.Id_Hotel equals habitaciones.Id_Hotel
                                    join reservas in _context.Reservas on habitaciones.Id_Habitacion equals reservas.Id_Habitacion
@@ -41,11 +42,13 @@ namespace Hotel_api.Controllers
                                        usuarios.Mail
                                    }).ToListAsync();
 
-            if (ReservasHotel.Count() == 0)
+            // Si no se encuentra datos se envia un response notfound
+            if (ReservasHotel.Count == 0)
             {
-                return Conflict(new { message = "No se encontraron datos relacionados al hotel" });
+                return NotFound(ReservasHotel);
             }
 
+            // Si se encuentra datos se envia un respose 200 y el resultado encontrado
             return Ok(ReservasHotel);
         }
     }

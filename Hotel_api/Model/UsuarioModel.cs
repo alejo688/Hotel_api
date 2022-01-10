@@ -1,11 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace Hotel_api.Model
 {
+    /**
+     * Clase modelo de la entidad Usuario
+     **/
     public class UsuarioModel
     {
         [Key]
