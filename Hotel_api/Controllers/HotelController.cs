@@ -2,9 +2,10 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using AutoMapper;
+using DB;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using Hotel_api.Data;
 
 namespace Hotel_api.Controllers
 {
@@ -12,12 +13,14 @@ namespace Hotel_api.Controllers
     [ApiController]
     public class HotelController : ControllerBase
     {
-        private readonly ApiDbContext _context;
+        private readonly HotelApiContext _context;
+        private readonly IMapper _mapper;
 
         // Inicialización del contexto
-        public HotelController(ApiDbContext context)
+        public HotelController(HotelApiContext context, IMapper mapper)
         {
             _context = context;
+            _mapper = mapper;
         }
 
         // GET: api/Hotel/1/2022-01-01/2022-01-31
@@ -27,10 +30,10 @@ namespace Hotel_api.Controllers
         {
             // Consulta para traer las reservaciones de acuerdo a los parametros recibidos
             var ReservasHotel = await (from hotel in _context.Hoteles
-                                   join habitaciones in _context.Habitaciones on hotel.Id_Hotel equals habitaciones.Id_Hotel
-                                   join reservas in _context.Reservas on habitaciones.Id_Habitacion equals reservas.Id_Habitacion
-                                   join usuarios in _context.Usuarios on reservas.Id_Usuario equals usuarios.Id_Usuario
-                                   where hotel.Id_Hotel == id 
+                                   join habitaciones in _context.Habitaciones on hotel.Id equals habitaciones.Hotel.Id
+                                   join reservas in _context.Reservas on habitaciones.Id equals reservas.Habitacion.Id
+                                   join usuarios in _context.Usuarios on reservas.Usuario.Id equals usuarios.Id
+                                   where hotel.Id == id 
                                    && reservas.Estado
                                    && reservas.Fecha_Entrada >= fecha_Inicio
                                    && reservas.Fecha_Entrada <= Fecha_Final
@@ -39,13 +42,13 @@ namespace Hotel_api.Controllers
                                        checkin = reservas.Fecha_Entrada, 
                                        checkout = reservas.Fecha_Salida, 
                                        reservas.Fecha_Reserva,
-                                       usuarios.Mail
+                                       usuarios.Correo
                                    }).ToListAsync();
 
             // Si no se encuentra datos se envia un response notfound
-            if (ReservasHotel.Count == 0)
+            if (ReservasHotel.Count == 0 || ReservasHotel == null)
             {
-                return NotFound(ReservasHotel);
+                return NotFound();
             }
 
             // Si se encuentra datos se envia un respose 200 y el resultado encontrado

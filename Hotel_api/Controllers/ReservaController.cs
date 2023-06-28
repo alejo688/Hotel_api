@@ -3,8 +3,10 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using Hotel_api.Data;
 using Hotel_api.Model;
+using AutoMapper;
+using DB;
+using DB.Entity;
 
 namespace Hotel_api.Controllers
 {
@@ -15,12 +17,14 @@ namespace Hotel_api.Controllers
     [ApiController]
     public class ReservaController : ControllerBase
     {
-        private readonly ApiDbContext _context;
+        private readonly HotelApiContext _context;
+        private readonly IMapper _mapper;
 
         // Inicialización del contexto
-        public ReservaController(ApiDbContext context)
+        public ReservaController(HotelApiContext context, IMapper mapper)
         {
             _context = context;
+            _mapper = mapper;
         }
 
         // POST: api/Reserva
@@ -49,12 +53,11 @@ namespace Hotel_api.Controllers
                 // validación de disponibilidad de la habitación de acuerdo a las fechas recibidas
                 var validarReservacion = await _context.Reservas
                     .Join(_context.Habitaciones,
-                        p => p.Id_Habitacion,
-                        x => x.Id_Habitacion,
+                        p => p.Id,
+                        x => x.Id,
                         (p, x) => new { Reserva = p, Habitacion = x }
                     )
-                    .Where(x => x.Reserva.Id_Habitacion == reservaModel.Id_Habitacion
-                        && ((x.Reserva.Fecha_Entrada >= reservaModel.Fecha_Entrada && x.Reserva.Fecha_Entrada <= reservaModel.Fecha_Entrada)
+                    .Where(x => ((x.Reserva.Fecha_Entrada >= reservaModel.Fecha_Entrada && x.Reserva.Fecha_Entrada <= reservaModel.Fecha_Entrada)
                             || (x.Reserva.Fecha_Entrada > reservaModel.Fecha_Salida && x.Reserva.Fecha_Entrada < reservaModel.Fecha_Salida)
                             || (x.Reserva.Fecha_Salida >= reservaModel.Fecha_Entrada && x.Reserva.Fecha_Salida <= reservaModel.Fecha_Entrada)
                             || (x.Reserva.Fecha_Salida > reservaModel.Fecha_Salida && x.Reserva.Fecha_Salida < reservaModel.Fecha_Salida))
@@ -65,10 +68,12 @@ namespace Hotel_api.Controllers
                 // Si la validación es correcta se almacena en base de datos y se envia en el response el id de la reserva
                 if (validarReservacion == null)
                 {
-                    _context.Reservas.Add(reservaModel);
+                    var reserva = _mapper.Map<Reserva>(reservaModel);
+                    
+                    _context.Reservas.Add(reserva);
                     await _context.SaveChangesAsync();
 
-                    return CreatedAtAction("GetReservaModel", new { id = reservaModel.Id_Reserva }, reservaModel);
+                    return CreatedAtAction("GetReservaModel", new { id = reserva.Id }, reservaModel);
                 }
                 else
                 { // si la validación no es correcta se envia mensaje de indisponibilidad de fechas

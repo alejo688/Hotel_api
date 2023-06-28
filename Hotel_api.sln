@@ -1,11 +1,17 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.32002.261
+# Visual Studio Version 17
+VisualStudioVersion = 17.6.33815.320
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Hotel_api", "Hotel_api\Hotel_api.csproj", "{519570F6-D598-4D17-95F6-5D3C3099442E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestHotelApiXunit", "TestHotelApiXunit\TestHotelApiXunit.csproj", "{6BE93CDD-019C-4BC9-B6C2-1417EA3EBC28}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TestHotelApiXunit", "TestHotelApiXunit\TestHotelApiXunit.csproj", "{6BE93CDD-019C-4BC9-B6C2-1417EA3EBC28}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{F5997005-6905-4B6D-819A-8B18D8E13A6F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DB", "DB\DB.csproj", "{22374560-202D-45F2-A713-6D605BF9105A}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{6D5EE6C2-5D1B-4691-A001-ED2DCE44D99D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,9 +27,18 @@ Global
 		{6BE93CDD-019C-4BC9-B6C2-1417EA3EBC28}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6BE93CDD-019C-4BC9-B6C2-1417EA3EBC28}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6BE93CDD-019C-4BC9-B6C2-1417EA3EBC28}.Release|Any CPU.Build.0 = Release|Any CPU
+		{22374560-202D-45F2-A713-6D605BF9105A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{22374560-202D-45F2-A713-6D605BF9105A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{22374560-202D-45F2-A713-6D605BF9105A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{22374560-202D-45F2-A713-6D605BF9105A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{519570F6-D598-4D17-95F6-5D3C3099442E} = {F5997005-6905-4B6D-819A-8B18D8E13A6F}
+		{6BE93CDD-019C-4BC9-B6C2-1417EA3EBC28} = {6D5EE6C2-5D1B-4691-A001-ED2DCE44D99D}
+		{22374560-202D-45F2-A713-6D605BF9105A} = {F5997005-6905-4B6D-819A-8B18D8E13A6F}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {D83A952A-95BD-47EB-80DC-4A4FBD12F2B1}

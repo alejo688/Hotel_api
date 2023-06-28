@@ -9,8 +9,7 @@ namespace Hotel_api.Model
     public class HabitacionModel
     {
         // Asignación de la llave primaria de la entidad
-        [Key]
-        public int Id_Habitacion { get; set; }
+        public int Id { get; set; }
 
         [Required(ErrorMessage = "El nombre de la habitación es obligatorio")] // Asignación de mensaje de error y dato requerido
         [StringLength(100)] // Asignación del valor limite del numero de caracteres
@@ -21,10 +20,7 @@ namespace Hotel_api.Model
 
         [Required(ErrorMessage = "El estado de la habitación es obligatorio")]
         public bool Estado { get; set; }
-
-        public int Id_Hotel { get; set; } // Asignación de llave foranea
-        public HotelModel HotelModel { get; set; }
-
-        public List<ReservaModel> Reservas { get; set; } // Intancia de entidad 1 a muchos
+        [Required(ErrorMessage = "El Hotel es requerido")]
+        public int HotelId { get; set; } 
     }
 }

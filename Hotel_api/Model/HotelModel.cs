@@ -9,8 +9,7 @@ namespace Hotel_api.Model
      **/
     public class HotelModel
     {
-        [Key]
-        public int Id_Hotel { get; set; }
+        public int Id { get; set; }
 
         [Required(ErrorMessage = "El nombre del hotel es obligatorio")]
         [StringLength(150)]
@@ -37,7 +36,5 @@ namespace Hotel_api.Model
         [Required(ErrorMessage = "La cantidad de habitaciones del hotel es obligatoria")]
         [Range(1,999)] // Asignación de rango
         public int Cantidad_Habitaciones { get; set; }
-
-        public List<HabitacionModel> Habitaciones { get; set; }
     }
 }

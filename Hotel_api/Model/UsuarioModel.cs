@@ -8,25 +8,21 @@ namespace Hotel_api.Model
      **/
     public class UsuarioModel
     {
-        [Key]
-        public int Id_Usuario { get; set; }
-
+        public int Id { get; set; }
         [Required(ErrorMessage = "Los nombres son obligatorios")]
         [StringLength(100)]
         public string Nombres { get; set; }
-
         [Required(ErrorMessage = "Los apellidos son obligatorios")]
         [StringLength(100)]
         public string Apellidos { get; set; }
-
         [Required(ErrorMessage = "El mail es obligatorio")]
         [StringLength(100)]
-        public string Mail { get; set; }
-
+        public string Correo { get; set; }
         [Required(ErrorMessage = "La direccion es obligatoria")]
         [StringLength(100)]
         public string Direccion { get; set; }
-
-        public List<ReservaModel> Reservas { get; set; }
+        [Required(ErrorMessage = "El telefono es obligatorio")]
+        [StringLength(100)]
+        public string Telefono { get; set; }
     }
 }
